@@ -2,18 +2,18 @@ import AppContext from "./Context";
 import React from "react";
 import { useState } from "react";
 export default function AppProvider({children}){
-    const [tok, setTok] = useState('')
-    const [name, setName] = useState('')
+    const [token, setToken] = useState('')
+    const [userName, setUserName] = useState('')
     const [doneLevels, setDoneLevels] = useState([])
     const config = {
         headers: {
-            "Authorization": `Bearer ${tok}`
+            "Authorization": `Bearer ${token}`
         }
     }
 
     
     return (
-        <AppContext.Provider value={{config, setTok, tok, name, setName, doneLevels, setDoneLevels}}>
+        <AppContext.Provider value={{config, setToken, token, userName, setUserName, doneLevels, setDoneLevels}}>
             {children}
         </AppContext.Provider>
     )

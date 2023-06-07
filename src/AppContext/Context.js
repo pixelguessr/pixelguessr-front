@@ -2,7 +2,7 @@ import { createContext } from "react";
 
 const AppContext = createContext({
     token: '',
-    name: '',
+    userName: '',
     doneLevels: []
 })
 

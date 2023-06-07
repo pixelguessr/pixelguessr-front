@@ -27,6 +27,8 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-color: #0C0D11;
+	font-family: 'Exo', sans-serif;
 }
 ol, ul {
 	list-style: none;
@@ -52,5 +54,7 @@ button{
 }
 input:focus{
     outline: none;
-}`
+}
+
+`
 export default GlobalStyle

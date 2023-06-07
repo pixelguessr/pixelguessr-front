@@ -12,7 +12,7 @@ function App() {
     <GlobalStyle/>
     <AppProvider>
     <Routes>
-      <Route path='/' element={<Login/>}/>
+      <Route path='/login' element={<Login/>}/>
       <Route path='/signup' element={<Cadastro/>}/>
     </Routes>
     </AppProvider>
