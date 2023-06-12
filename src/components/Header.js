@@ -8,9 +8,10 @@ export default function Header(){
     return(<>
     <header className="w-full flex py-1 px-10 items-center justify-between bg-[#14141D]">
         <img style={{width:'5%'}} src={logo} alt="logo"/>
-      <div className="flex items-center text-lg font-semibold leading-6 text-white">{userName}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Link to='/login'><ImExit/></Link></div>
-      {/* <Link to="/login" class="text-lg font-semibold leading-6 text-white">Login <span aria-hidden="true">&rarr;</span></Link>
-     */}
+      {
+        userName ? <div className="flex items-center text-lg font-semibold leading-6 text-white">{userName}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Link to='/login'><ImExit/></Link></div> : <Link to="/login" class="text-lg font-semibold leading-6 text-white">Login <span aria-hidden="true">&rarr;</span></Link>
+      }
+    
     </header>
     </>)
 }
