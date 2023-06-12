@@ -18,19 +18,22 @@ export default function Login() {
   function success(e) {
     setUserName(name)
     setToken(e.data.token)
-    navigate('/home')
+    navigate('/')
   }
 
   function checkLogin(e) {
     e.preventDefault()
-    setLoading(true)
-    let obj = {
-      name,
-      password
-    }
-    const promise = axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, obj)
-    promise.then((e) => success(e))
-    promise.catch((e) => fail(e))
+    setUserName(name)
+    navigate('/')
+    return
+    // setLoading(true)
+    // let obj = {
+    //   name,
+    //   password
+    // }
+    // const promise = axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, obj)
+    // promise.then((e) => success(e))
+    // promise.catch((e) => fail(e))
   }
 
   return (

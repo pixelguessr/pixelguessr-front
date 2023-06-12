@@ -56,5 +56,8 @@ input:focus{
     outline: none;
 }
 
+input:active{
+  outline: none;
+}
 `
 export default GlobalStyle
