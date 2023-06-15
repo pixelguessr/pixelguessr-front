@@ -8,7 +8,6 @@ input:-webkit-autofill:hover {
   -webkit-box-shadow: 0 0 0px 1000px rgb(31, 41, 55) inset;
 }
 input:-webkit-autofill:focus{
-border: 1px solid rgb(101, 163, 13);
 outline: none;
 }
 input:hover{

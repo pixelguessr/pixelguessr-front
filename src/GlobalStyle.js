@@ -59,5 +59,13 @@ input:focus{
 input:active{
   outline: none;
 }
+[type='text']:focus{
+  --tw-ring-color: rgb(101, 163, 13);
+  border: none;
+}
+[type='password']:focus{
+  --tw-ring-color: rgb(101, 163, 13);
+  border: none;
+}
 `
 export default GlobalStyle

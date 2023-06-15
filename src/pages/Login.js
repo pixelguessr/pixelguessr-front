@@ -50,11 +50,11 @@ export default function Login() {
 
           <form onSubmit={checkLogin}>
             <div className="w-full mt-4">
-              <input autoComplete="username" disabled={loading} value={name} onChange={(e) => setName(e.target.value)} required className="autofill:bg-black block w-full px-4 py-2 mt-2 text-gray-200 placeholder-gray-400 border rounded-lg bg-gray-800 border-gray-600 dark:placeholder-gray-400 focus:ring-2 focus:ring-inset focus:ring-lime-600" type="text" placeholder="Nome de usuário" aria-label="Nome de usuário" />
+              <input autoComplete="off" disabled={loading} value={name} onChange={(e) => setName(e.target.value)} required className="autofill:bg-black block w-full px-4 py-2 mt-2 text-gray-200 placeholder-gray-400 border rounded-lg bg-gray-800 border-gray-600 dark:placeholder-gray-400 focus:ring-2 focus:ring-inset focus:ring-lime-600" type="text" placeholder="Nome de usuário" aria-label="Nome de usuário" />
             </div>
 
             <div className="w-full mt-4">
-              <input disabled={loading} value={password} onChange={(e) => setPassword(e.target.value)} required className="block w-full px-4 py-2 mt-2 text-gray-200 placeholder-gray-400 border rounded-lg bg-gray-800 border-gray-600 dark:placeholder-gray-400 focus:ring-2 focus:ring-inset focus:ring-lime-600" type="password" placeholder="Senha" aria-label="Senha" />
+              <input autoComplete="off" disabled={loading} value={password} onChange={(e) => setPassword(e.target.value)} required className="block w-full px-4 py-2 mt-2 text-gray-200 placeholder-gray-400 border rounded-lg bg-gray-800 border-gray-600 dark:placeholder-gray-400 focus:ring-2 focus:ring-inset focus:ring-lime-600" type="password" placeholder="Senha" aria-label="Senha" />
             </div>
 
             <div className="flex items-center justify-between mt-4">
