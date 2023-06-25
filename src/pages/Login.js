@@ -2,6 +2,7 @@ import { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AppContext from "../AppContext/Context"
+import logo from "../assets/logo_with_name.png"
 export default function Login() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -41,15 +42,14 @@ export default function Login() {
       <div className="w-full max-w-lg mx-auto my-auto overflow-hidden bg-[#14141D] rounded-lg shadow-md dark:bg-gray-800">
         <div className="px-6 py-4">
           <div className="flex justify-center mx-auto">
-            <img className="w-auto h-7 sm:h-8" src="https://merakiui.com/images/logo.svg" alt="" />
+            <img className="w-auto h-24" src={logo} alt="logo" />
           </div>
 
-          <h3 className="mt-3 text-xl font-medium text-center text-gray-600 dark:text-gray-200">Pixel Guessr</h3>
+          <h3 className="mt-3 text-lg font-medium text-center text-gray-600 dark:text-gray-200">Faça o login</h3>
 
-          <p className="mt-1 text-center text-gray-200 dark:text-gray-400">Login</p>
 
           <form onSubmit={checkLogin}>
-            <div className="w-full mt-4">
+            <div className="w-full mt-2">
               <input autoComplete="off" disabled={loading} value={name} onChange={(e) => setName(e.target.value)} required className="autofill:bg-black block w-full px-4 py-2 mt-2 text-gray-200 placeholder-gray-400 border rounded-lg bg-gray-800 border-gray-600 dark:placeholder-gray-400 focus:ring-2 focus:ring-inset focus:ring-lime-600" type="text" placeholder="Nome de usuário" aria-label="Nome de usuário" />
             </div>
 
