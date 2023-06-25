@@ -12,6 +12,7 @@ export default function Game() {
     const info_audio = new Audio(info_sound)
     const hint_audio = new Audio(hint_sound)
     const [numberOfHints, setNumberOfHints] = useState(3)
+    const [showResult, setShowResult] = useState(false)
 
     if (guess === 'MARIO') {
         alert('acertou')
@@ -26,8 +27,8 @@ export default function Game() {
         info_audio.play();
     }
 
-    return (
-        <div className="flex mt-6 justify-center">
+    return (<div className="w-full relative">
+        <div className="flex opacity-100 mt-6 justify-center">
             <div className="flex flex-col items-center w-1/3 p-8">
                 <div style={{transform: numberOfHints<3? 'translateX(0)' : 'translateX(-300%)'}} className={`bg-lime-600 transition-all duration-700 ease-in-out inline-block cursor-default p-3 mb-6 rounded-full`}><p className="text-white">Tem um irmão chamado Luigi</p></div>
                 <div style={{transform: numberOfHints<2? 'translateX(0)' : 'translateX(-300%)'}} className={`bg-lime-600 transition-all duration-700 ease-in-out inline-block cursor-default p-3 mb-6 rounded-full`}><p className="text-white">É um encanador</p></div>
@@ -35,9 +36,9 @@ export default function Game() {
             </div>
             <div className="bg-[#14141D] rounded-md px-6 py-4 w-1/3 flex-col justify-center items-center">
                 <div className="flex justify-between">
-                    <button disabled={numberOfHints===0} onClick={handleHint} className="bg-lime-600 text-white py-2 px-2 rounded-full shadow-md"><span className="bg-lime-700 rounded-full px-2 ">{numberOfHints}</span> dicas</button>
-                    <button onClick={handleInfo} className="bg-amber-500 items-center flex text-white py-2 px-2 rounded-full shadow-md"><BsInfoCircleFill size={22} style={{ paddingRight: '6px' }} />Regras</button>
-                    <button className="bg-red-700 shadow-md flex items-center text-white py-2 px-2 rounded-full">Pular<IoMdSkipForward style={{ paddingLeft: '4px' }} /></button></div>
+                    <button disabled={numberOfHints===0} onClick={handleHint} className={`${numberOfHints? 'active:bg-lime-500' : ''} bg-lime-600 text-white py-2 px-2 rounded-full shadow-md`}><span className="bg-lime-700 rounded-full px-2 ">{numberOfHints}</span> dicas</button>
+                    <button onClick={handleInfo} className="bg-amber-500 active:bg-amber-400 items-center flex text-white py-2 px-2 rounded-full shadow-md"><BsInfoCircleFill size={22} style={{ paddingRight: '6px' }} />Regras</button>
+                    <button className="bg-red-700 active:bg-red-600 shadow-md flex items-center text-white py-2 px-2 rounded-full">Pular<IoMdSkipForward style={{ paddingLeft: '4px' }} /></button></div>
                 <div className="overflow-hidden rounded-xl shadow-2xl my-4 mx-auto aspect-square w-11/12"><img src="https://i.pinimg.com/originals/88/2d/88/882d883fcf289d704c064da27ed4fa60.png" alt="character" style={{}} className="w-full blur-lg h-full object-cover" /></div>
                 <div className="flex justify-center items-center w-full"><ReactCodeInput value={guess} onChange={setGuess} forceUppercase type='text' fields={5} inputStyle={{ borderRadius: '15px', background: '#0C0D11', border: 'none', color: 'white', width: '15%', aspectRatio: '1 / 1', fontFamily: 'Outfit', fontSize: '30px', fontWeight: 700, marginInline: '10px', textAlign: 'center', padding: 0 }} />
                 </div>
@@ -100,7 +101,14 @@ export default function Game() {
 
 
         </div>
-        //modal das infos
 
+        
+        <div className={`opacity-0 ${showResult? 'flex' : 'hidden'} flex-col top-0 w-full h-full absolute z-50 items-center`}>
+            <img className="rounded-lg h-2/3" src="https://i.pinimg.com/originals/88/2d/88/882d883fcf289d704c064da27ed4fa60.png" alt=""/>
+            <h1 className="text-gray-100 text-3xl font-semibold mt-8">Mario</h1>
+            <h1 className="text-gray-400 text-2xl font-medium mt-2">Super Mario World</h1>
+            <h1 className="font-[Exo] text-white hover:text-gray-300 cursor-pointer text-lg mt-8">Continuar jogando ↵</h1>
+        </div>
+        </div>
     )
 }
