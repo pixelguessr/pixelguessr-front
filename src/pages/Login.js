@@ -3,38 +3,37 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AppContext from "../AppContext/Context"
 import logo from "../assets/logo_with_name.png"
+import { RotatingLines } from "react-loader-spinner";
 export default function Login() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const {setToken, setUserName} = useContext(AppContext)
+  const {setToken, setUserName, setDoneLevels} = useContext(AppContext)
   const navigate = useNavigate();
 
 
   function fail(a) {
     setLoading(false)
-    alert(a.message)
+    alert(a.response.data)
     console.log(a)
   }
   function success(e) {
     setUserName(name)
     setToken(e.data.token)
+    setDoneLevels(e.data.userDoneLevels)
     navigate('/')
   }
 
   function checkLogin(e) {
     e.preventDefault()
-    setUserName(name)
-    navigate('/')
-    return
-    // setLoading(true)
-    // let obj = {
-    //   name,
-    //   password
-    // }
-    // const promise = axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, obj)
-    // promise.then((e) => success(e))
-    // promise.catch((e) => fail(e))
+    setLoading(true)
+    let obj = {
+      name,
+      password
+    }
+    const promise = axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, obj)
+    promise.then((e) => success(e))
+    promise.catch((e) => fail(e))
   }
 
   return (
@@ -59,8 +58,8 @@ export default function Login() {
 
             <div className="flex items-center justify-between mt-4">
 
-              <button disabled={loading} className="mx-auto px-6 py-2 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-lime-600 rounded-lg hover:bg-lime-500 focus:outline-none focus:ring focus:ring-opacity-50">
-                Entrar
+              <button disabled={loading} className="mx-auto px-6 py-2 text-sm w-28 flex justify-center font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-lime-600 rounded-lg hover:bg-lime-500 focus:outline-none focus:ring focus:ring-opacity-50">
+              {loading ? <RotatingLines strokeColor="white" width="20"/> : 'Entrar'}
               </button>
             </div>
           </form>

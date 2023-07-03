@@ -1,10 +1,12 @@
-import Game from "../components/Game";
 import Header from "../components/Header";
-import { cha } from "../assets/characters";
+import { useContext } from "react";
+import AppContext from "../AppContext/Context";
+import Demo from "../components/Demo";
+import Game from "../components/Game";
 export default function Home(){
-    console.log(cha.length)
+    const {token} = useContext(AppContext)
     return (<>
     <Header/>
-    <Game/>
+    {token? <Game/> : <Demo/>}
     </>)
 }
