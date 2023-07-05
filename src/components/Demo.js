@@ -1,7 +1,6 @@
 import { IoMdSkipForward } from "react-icons/io"
 import { BsInfoCircleFill } from "react-icons/bs"
 import { AiOutlineCloseCircle } from "react-icons/ai"
-import ReactCodeInput from "react-code-input"
 import { useState } from "react"
 import info_sound from "../assets/info_sound_effect.mp3"
 import hint_sound from "../assets/hint_sound_effect.mp3"
@@ -9,6 +8,8 @@ import skip_sound from "../assets/skip_sound_effect.mp3"
 import success_sound from "../assets/success_sound_effect.mp3"
 import { useNavigate } from "react-router-dom"
 import template from "../assets/character_template.png"
+import PinInput from "react-pin-input"
+import { inputStyles } from "../assets/inputStyles"
 export default function Demo() {
 
     const [showModal, setShowModal] = useState(false)
@@ -25,7 +26,7 @@ export default function Demo() {
 
     const navigate = useNavigate()
 
-    function handleInput(guess){
+    function handleInput(guess) {
         if (guess === 'MARIO') {
             handleSuccess()
         }
@@ -67,7 +68,7 @@ export default function Demo() {
         success_audio.play();
         handleHandleNextLevel(true)
     }
-
+    
     return (<div className="w-full relative">
         <div className={`flex ${showNextLevel ? 'opacity-0' : 'opacity-100'} transition-all duration-300 ease-in-out mt-6 justify-center`}>
             <div className="flex flex-col items-center w-1/3 p-8">
@@ -75,17 +76,28 @@ export default function Demo() {
                 <div style={{ transform: numberOfHints < 2 ? 'translateX(0)' : 'translateX(-300%)' }} className={`bg-lime-600 transition-all duration-700 ease-in-out inline-block cursor-default p-3 mb-6 rounded-full`}><p className="text-white">É um encanador</p></div>
                 <div style={{ transform: numberOfHints < 1 ? 'translateX(0)' : 'translateX(-300%)' }} className={`bg-lime-600 transition-all duration-700 ease-in-out inline-block cursor-default p-3 mb-6 rounded-full`}><p className="text-white">Maior símbolo da Nintendo</p></div>
             </div>
-            <div className="bg-[#14141D] rounded-md px-6 py-4 w-1/3 flex-col justify-center items-center">
+            <div className="bg-[#14141D] rounded-md mb-6 px-6 py-4 w-1/3 flex-col justify-center items-center">
                 <div className="flex justify-between">
                     <button disabled={numberOfHints === 0} onClick={handleHint} className={`${numberOfHints ? 'active:bg-lime-500' : ''} bg-lime-600 text-white py-2 px-2 rounded-full shadow-md`}><span className="bg-lime-700 rounded-full px-2 ">{numberOfHints}</span> dicas</button>
                     <button onClick={handleInfo} className="bg-amber-500 active:bg-amber-400 items-center flex text-white py-2 px-2 rounded-full shadow-md"><BsInfoCircleFill size={22} style={{ paddingRight: '6px' }} />Regras</button>
                     <button type="button" onClick={() => handleSkipModal(true)} className="bg-red-700 active:bg-red-600 shadow-md flex items-center text-white py-2 px-2 rounded-full">Pular<IoMdSkipForward style={{ paddingLeft: '4px' }} /></button></div>
-                <div className="overflow-hidden rounded-xl shadow-2xl my-4 mx-auto aspect-square w-11/12"><img src={template} alt="character" style={{}} className="w-full blur-lg h-full object-cover" /></div>
-                <div className="w-full"><ReactCodeInput className=" justify-center" onChange={handleInput} forceUppercase type='text' fields={5} inputStyle={{ borderRadius: '15px', background: '#0C0D11', border: 'none', color: 'white', width: '15%', aspectRatio: '1 / 1', fontFamily: 'Outfit', fontSize: '30px', fontWeight: 700, marginInline: '10px', textAlign: 'center', padding: 0 }} />
+                <div className="overflow-hidden rounded-xl shadow-2xl mt-5 mb-3 mx-auto aspect-square w-11/12"><img src={template} alt="character" style={{}} className="w-full blur-lg h-full object-cover" /></div>
+                <div className="flex w-full justify-center">
+                    <PinInput
+                        length={5}
+                        initialValue=""
+                        type="custom"
+                        focus={true}
+                        style={{width: '100%', textAlign: 'center'}}
+                        inputStyle={inputStyles[5]}
+                        inputFocusStyle={{ border: '1px solid #65A30D' }}
+                        onComplete={handleInput}
+                        autoSelect={true}
+                    />
                 </div>
             </div>
             <div className="w-1/3">
-                          </div>
+            </div>
             {/* info modal */}
             {showModal ? (
                 <>

@@ -2,16 +2,16 @@ import { IoMdSkipForward, IoMdTrophy } from "react-icons/io"
 import { BsInfoCircleFill } from "react-icons/bs"
 import { AiOutlineCloseCircle } from "react-icons/ai"
 import { BiMedal } from "react-icons/bi"
-import ReactCodeInput from "react-code-input"
 import { useContext, useEffect, useState } from "react"
 import info_sound from "../assets/info_sound_effect.mp3"
 import hint_sound from "../assets/hint_sound_effect.mp3"
 import skip_sound from "../assets/skip_sound_effect.mp3"
 import success_sound from "../assets/success_sound_effect.mp3"
-import { useNavigate } from "react-router-dom"
 import AppContext from "../AppContext/Context"
 import axios from "axios"
 import { Oval } from "react-loader-spinner"
+import PinInput from "react-pin-input"
+import { inputStyles } from "../assets/inputStyles"
 export default function Game() {
     const [showModal, setShowModal] = useState(false)
     const [showSkipModal, setShowSkipModal] = useState(false)
@@ -21,6 +21,7 @@ export default function Game() {
     const skip_audio = new Audio(skip_sound)
     const success_audio = new Audio(success_sound)
     const [numberOfHints, setNumberOfHints] = useState(3)
+    const [numberOfInputs, setNumberOfInputs] = useState(5)
     const [rv, setRV] = useState(0)
     const [loading, setLoading] = useState(true)
     const [showNextLevel, setShowNextLevel] = useState(false)
@@ -42,6 +43,7 @@ export default function Game() {
             setRankInfo(i.data.rankInfo)
             setLoading(false)
             setNumberOfHints(3)
+            setNumberOfInputs(i.data.levelInfo.name.length)
         }).catch((e) => { console.log(e) })
     }, [rv])
 
@@ -64,7 +66,7 @@ export default function Game() {
             score
         }
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_URL}/game/guess`, obj, config);
+            await axios.post(`${process.env.REACT_APP_API_URL}/game/guess`, obj, config);
             setDoneLevels([...doneLevels, levelInfo.id])
             console.log('ok');
         } catch (error) {
@@ -150,8 +152,19 @@ export default function Game() {
                     <button disabled={numberOfHints === 0} onClick={handleHint} className={`${numberOfHints ? 'active:bg-lime-500' : ''} bg-lime-600 text-white py-2 px-2 rounded-full shadow-md`}><span className="bg-lime-700 rounded-full px-2 ">{numberOfHints}</span> dicas</button>
                     <button onClick={handleInfo} className="bg-amber-500 active:bg-amber-400 items-center flex text-white py-2 px-2 rounded-full shadow-md"><BsInfoCircleFill size={22} style={{ paddingRight: '6px' }} />Regras</button>
                     <button type="button" onClick={() => handleSkipModal(true)} className="bg-red-700 active:bg-red-600 shadow-md flex items-center text-white py-2 px-2 rounded-full">Pular<IoMdSkipForward style={{ paddingLeft: '4px' }} /></button></div>
-                <div className="overflow-hidden rounded-xl shadow-2xl my-4 mx-auto aspect-square w-11/12"><img src={levelInfo.image} alt="character" style={{}} className="w-full blur-lg h-full object-cover" /></div>
-                <div className="flex justify-center"><ReactCodeInput onChange={handleInput} forceUppercase type='text' fields={levelInfo.name?.length} inputStyle={{ borderRadius: '15px', background: '#0C0D11', border: 'none', color: 'white', width: '15%', aspectRatio: '1 / 1', fontFamily: 'Outfit', fontSize: '30px', fontWeight: 700, marginInline: '10px', textAlign: 'center', padding: 0 }} />
+                <div className="overflow-hidden rounded-xl shadow-2xl mt-5 mb-3 mx-auto aspect-square w-11/12"><img src={levelInfo.image} alt="character" style={{}} className="w-full blur-lg h-full object-cover" /></div>
+                <div className="flex w-full justify-center">
+                    <PinInput
+                        length={numberOfInputs}
+                        initialValue=""
+                        type="custom"
+                        focus={true}
+                        style={{width: '100%', textAlign: 'center'}}
+                        inputStyle={inputStyles[numberOfInputs]}
+                        inputFocusStyle={{ border: '1px solid #65A30D' }}
+                        onComplete={handleInput}
+                        autoSelect={true}
+                    />
                 </div>
             </div>
             <div className="w-1/3">
