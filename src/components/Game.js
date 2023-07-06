@@ -27,14 +27,23 @@ export default function Game() {
     const [showNextLevel, setShowNextLevel] = useState(false)
     const [showNextLevel2, setShowNextLevel2] = useState(false)
     const { doneLevels, setDoneLevels, config } = useContext(AppContext)
-
     const [levelInfo, setLevelInfo] = useState({})
     const [rankInfo, setRankInfo] = useState({})
+    const [soldOutLevels, setSoldOutLevels] = useState(false)
 
     useEffect(() => {
+        const doneLevelsIds = doneLevels.map((i)=> i.character_id)
+        const availableLevels = []
 
-        const availableLevels = Array.from({ length: 43 }, (_, i) => i + 1)
-            .filter(level => !doneLevels.includes(level));
+        for (let i = 1; i <= 43; i++) {
+            if(!doneLevelsIds.includes(i)){
+                availableLevels.push(i)
+            }
+        }
+        if(availableLevels.length===0){
+            setSoldOutLevels(true)
+            setLoading(false)
+        } else{
         const randomIndex = Math.floor(Math.random() * availableLevels.length);
         const randomLevel = availableLevels[randomIndex];
 
@@ -45,6 +54,7 @@ export default function Game() {
             setNumberOfHints(3)
             setNumberOfInputs(i.data.levelInfo.name.length)
         }).catch((e) => { console.log(e) })
+    }
     }, [rv])
 
     async function makeAGuess(win) {
@@ -67,7 +77,7 @@ export default function Game() {
         }
         try {
             await axios.post(`${process.env.REACT_APP_API_URL}/game/guess`, obj, config);
-            setDoneLevels([...doneLevels, levelInfo.id])
+            setDoneLevels([...doneLevels, {character_id: levelInfo.id}])
             console.log('ok');
         } catch (error) {
             console.log(error);
@@ -138,6 +148,20 @@ export default function Game() {
                 strokeWidthSecondary={2}
             />
         </div>)
+    }
+    if(soldOutLevels){
+        return(<div id="popup-modal" className={`flex justify-center pt-32 top-0 left-0 z-50 p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full`}>
+        <div className="relative w-full max-w-md max-h-full">
+            <div className="relative bg-[#14141D] rounded-lg shadow dark:bg-gray-700">
+            
+                <div className="p-6 text-center">
+                    <svg aria-hidden="true" className="mx-auto mb-4 text-gray-400 w-14 h-14 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <h3 className="mb-5 text-lg font-normal text-gray-100 dark:text-gray-400">Você já jogou todos os níveis! Mais personagens estarão disponíveis em breve.</h3>
+
+                   </div>
+            </div>
+        </div>
+    </div>)
     }
 
     return (<div className="w-full relative">
